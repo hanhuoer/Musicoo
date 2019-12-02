@@ -22,6 +22,6 @@ BANNER = """
 
 # 配置 Web 服务
 WEB_SERVER = {
-    "HOST": "127.0.0.1",
+    "HOST": "0.0.0.0",
     "PORT": 8888
 }

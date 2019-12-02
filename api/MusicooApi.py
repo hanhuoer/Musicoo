@@ -155,13 +155,21 @@ if platform.system() != "Windows":
             return self.application
 
 
-def run():
-    app.run(host=config.host_ip, port=config.host_port)
+def run(host, port):
+    if host is None:
+        host = config.host_ip
+    if port is None:
+        port = config.host_port
+    app.run(host=host, port=port)
 
 
-def run_():
+def run_(host, port):
+    if host is None:
+        host = config.host_ip
+    if port is None:
+        port = config.host_port
     _options = {
-        'bind': '%s:%s' % (config.host_ip, config.host_port),
+        'bind': '%s:%s' % (host, port),
         'workers': 4,
         'accesslog': '-',
         'access_log_format': '%(h)s %(l)s %(t)s "%(r)s" %(s)s "%(a)s"'
@@ -171,6 +179,6 @@ def run_():
 
 if __name__ == '__main__':
     if platform.system() == "Windows":
-        run()
+        run(config.host_ip, config.host_port)
     else:
-        run_()
+        run_(config.host_ip, config.host_port)

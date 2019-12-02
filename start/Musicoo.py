@@ -7,6 +7,7 @@ sys.path.append('../')
 
 from api.MusicooApi import run, run_
 from config.Setting import BANNER
+from config.Getter import ConfigGetter
 
 CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
 
@@ -18,13 +19,16 @@ def cli():
 
 
 @cli.command(name="run")
-def schedule():
+@click.option('--host', default=None, help='Number of greetings.')
+@click.option('--port', default=None, help='Number of greetings.')
+def server(host, port):
     """start the web server"""
+    print(host, port)
     click.echo(BANNER)
     if platform.system() == "Windows":
-        run()
+        run(host, port)
     else:
-        run_()
+        run_(host, port)
 
 
 if __name__ == '__main__':

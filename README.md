@@ -62,10 +62,18 @@ WEB_SERVER = {
 # 启动项目之前确保项目依赖全部安装
 
 # 启动服务
-> python start/Musicoo.py run
+> python Musicoo.py run
+# 启动时指定 host, port 将使用 setting 中的配置
+> python Musicoo.py run --host 0.0.0.0
+# 启动时指定 port, host 将使用 setting 中的配置
+> python Musicoo.py run --port 8888
+# 启动时指定 host port
+> python Musicoo.py run --host 0.0.0.0 --port 8888
 ```
 
 ## 更新日志
+
+2019-12-02 版本 1.0.1 添加日志、异常处理和项目启动可选参数
 
 2019-12-02 版本 1.0.0 首次发布
 

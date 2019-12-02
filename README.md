@@ -31,13 +31,13 @@
 1.**克隆项目**
 
 ```
-git clone https://github.com/hanhuoer/Musicoo.git
+> git clone https://github.com/hanhuoer/Musicoo.git
 ```
 
 2.**安装依赖**
 
 ```
-pip install -r requirements.txt
+> pip install -r requirements.txt
 ```
 
 ## 使用

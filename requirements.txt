@@ -1,0 +1,5 @@
+Click==7.0
+Flask==0.12
+requests==2.20.0
+gunicorn==19.9.0
+pycryptodome==3.9.4

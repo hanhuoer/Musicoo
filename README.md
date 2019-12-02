@@ -24,7 +24,7 @@
     '---'                                      ---`-'    `----'                                            
 ```
 
-开放接口信息请查看 [Wiki](https://github.com/hanhuoer/Musicoo/wiki/web-api)
+开放接口信息请查看 [Wiki](https://github.com/hanhuoer/Musicoo/wiki/Web-%E5%BC%80%E6%94%BE%E6%8E%A5%E5%8F%A3%E6%96%87%E6%A1%A3)
 
 ## 安装
 

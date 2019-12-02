@@ -6,7 +6,7 @@
    Date         :   2019/12/2
 -------------------------------------------------
 """
-
+from exception.NeteaseResolverException import NeteaseResolverException
 from model.Album import Album
 from model.Song import Song
 
@@ -26,17 +26,21 @@ class NeteaseResolver(object):
         :param json: netease api 响应 json 串
         :return: Song
         """
-        json = json.get('data')
+        try:
+            json = json.get('data')
 
-        if isinstance(json, list) and len(json) < 1:
+            if isinstance(json, list) and len(json) < 1:
+                return song
+
+            if isinstance(json, list) and len(json) > 0:
+                json = json[0]
+
+            song.set_id(json.get('id'))
+            song.set_url(json.get('url'))
+        except Exception as e:
+            raise NeteaseResolverException('resolver exception; song: {}, json: {}'.format(song, json))
+        finally:
             return song
-
-        if isinstance(json, list) and len(json) > 0:
-            json = json[0]
-
-        song.set_id(json.get('id'))
-        song.set_url(json.get('url'))
-        return song
 
     @staticmethod
     def song_lyric_resolver(song=Song(), json={}):
@@ -47,9 +51,13 @@ class NeteaseResolver(object):
         :param json: netease api 响应 json 串
         :return: Song
         """
-        json = json.get('lrc')
-        song.set_lyric(json.get('lyric'))
-        return song
+        try:
+            json = json.get('lrc')
+            song.set_lyric(json.get('lyric'))
+        except Exception as e:
+            raise NeteaseResolverException('resolver exception; song: {}, json: {}'.format(song, json))
+        finally:
+            return song
 
     @staticmethod
     def song_search_resolver(song=Song(), json={}):
@@ -60,13 +68,17 @@ class NeteaseResolver(object):
         :param json:
         :return:
         """
-        json = json.get('result')
-        json = json.get('songs')
-        if isinstance(json, list) and len(json) > 0:
-            json = json[0]
+        try:
+            json = json.get('result')
+            json = json.get('songs')
+            if isinstance(json, list) and len(json) > 0:
+                json = json[0]
 
-        song.set_id(json.get('id'))
-        return song
+            song.set_id(json.get('id'))
+        except Exception as e:
+            raise NeteaseResolverException('resolver exception; song: {}, json: {}'.format(song, json))
+        finally:
+            return song
 
     @staticmethod
     def song_detail_resolver(song=Song(), json={}):
@@ -77,27 +89,31 @@ class NeteaseResolver(object):
         :param json:
         :return:
         """
-        json = json.get('songs')
+        try:
+            json = json.get('songs')
 
-        if isinstance(json, list) and len(json) > 0:
-            json = json[0]
+            if isinstance(json, list) and len(json) > 0:
+                json = json[0]
 
-        album_json = json.get('al')
-        artist_json = json.get('ar')
-        if isinstance(artist_json, list) and len(artist_json) > 0:
-            artist_json = artist_json[0]
+            album_json = json.get('al')
+            artist_json = json.get('ar')
+            if isinstance(artist_json, list) and len(artist_json) > 0:
+                artist_json = artist_json[0]
 
-        song.set_name(json.get('name'))
-        song.set_id(json.get('id'))
-        song.set_duration(json.get('dt'))
-        song.set_picture_url(album_json.get('picUrl'))
-        song.set_artist(artist_json.get('name'))
+            song.set_name(json.get('name'))
+            song.set_id(json.get('id'))
+            song.set_duration(json.get('dt'))
+            song.set_picture_url(album_json.get('picUrl'))
+            song.set_artist(artist_json.get('name'))
 
-        album = Album()
-        album.set_id(album_json.get('id'))
-        album.set_name(album_json.get('name'))
-        album.set_artist(artist_json.get('name'))
-        album.set_picture_url(album_json.get('picUrl'))
-        song.set_album(album)
+            album = Album()
+            album.set_id(album_json.get('id'))
+            album.set_name(album_json.get('name'))
+            album.set_artist(artist_json.get('name'))
+            album.set_picture_url(album_json.get('picUrl'))
+            song.set_album(album)
 
-        return song
+        except Exception as e:
+            raise NeteaseResolverException('resolver exception; song: {}, json: {}'.format(song, json))
+        finally:
+            return song

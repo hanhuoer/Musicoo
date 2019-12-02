@@ -12,6 +12,7 @@ import json
 import requests
 
 import netease.Encrypt as netease
+from util.LogHandler import LogHandler
 
 BASE_URL = "http://music.163.com"
 DEFAULT_TIMEOUT = 10
@@ -37,6 +38,7 @@ class NetEase(object):
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36"
         }
         self.session = requests.session()
+        self.log = LogHandler('NeteaseApi')
 
     def _raw_request(self, method, url, data=None):
         """
@@ -84,12 +86,14 @@ class NetEase(object):
         data.update({"csrf_token": csrf_token})
         params = self._get_form_data(json.dumps(data).encode('utf-8'))
         try:
+            self.log.debug('[Netease api] url: {};\trequest  data: {};\tparams: {}'.format(url, data, params))
             response = self._raw_request(method, url, params)
             response = response.json()
+            self.log.debug('[Netease api] url: {};\tresponse data: {}'.format(url, response))
         except requests.exceptions.RequestException as e:
-            print(e)
+            self.log.error('[Netease api] request error: {}'.format(e))
         except ValueError as e:
-            print("Path: {}, response: {}".format(path, response.text[:200]))
+            self.log.error("[Netease api] request error; Path: {}, response: {}".format(path, response.text[:200]))
         finally:
             return response
 

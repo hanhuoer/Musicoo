@@ -9,13 +9,16 @@
 
 import platform
 
-from flask import Flask
+from flask import Flask, request
 
 from common.Response import Response
 from config.Getter import config
 from service.MusicooService import MusicooService
+from util.LogHandler import LogHandler
 
 app = Flask(__name__)
+
+log = LogHandler('Musicoo')
 
 
 @app.route('/', methods=['GET'])
@@ -31,12 +34,19 @@ def song_url(song_id):
     :param song_id:
     :return:
     """
-    if song_id is None or song_id is '' or len(song_id) is 0:
-        return Response.error(song_id, message='song_id can not be null.')
-    if song_id.isdigit() is False:
-        return Response.error(song_id, message='song_id must be digit.')
+    try:
+        if song_id is None or song_id is '' or len(song_id) is 0:
+            return Response.error(song_id, message='song_id can not be null.')
+        if song_id.isdigit() is False:
+            return Response.error(song_id, message='song_id must be digit.')
 
-    return Response.success(MusicooService.song_url(song_id).to_json())
+        return Response.success(MusicooService.song_url(song_id).to_json())
+    except Exception as e:
+        log.error('[Musicoo] ip: {};\t\terror: {}'.format(request.remote_addr, e))
+        log.info('[Musicoo] ip: {};\t\terror: {}'.format(request.remote_addr, e))
+        log.debug('[Musicoo] ip: {};\t\terror: {}'.format(request.remote_addr, e))
+        log.warning('[Musicoo] ip: {};\t\terror: {}'.format(request.remote_addr, e))
+        return Response.error()
 
 
 @app.route('/netease/song/<song_id>/lyric', methods=['GET'])
@@ -47,12 +57,16 @@ def song_lyric(song_id):
     :param song_id:
     :return:
     """
-    if song_id is None or song_id is '' or len(song_id) is 0:
-        return Response.error(song_id, message='song_id can not be null.')
-    if song_id.isdigit() is False:
-        return Response.error(song_id, message='song_id must be digit.')
+    try:
+        if song_id is None or song_id is '' or len(song_id) is 0:
+            return Response.error(song_id, message='song_id can not be null.')
+        if song_id.isdigit() is False:
+            return Response.error(song_id, message='song_id must be digit.')
 
-    return Response.success(MusicooService.song_lyric(song_id).to_json())
+        return Response.success(MusicooService.song_lyric(song_id).to_json())
+    except Exception as e:
+        log.error('[Musicoo] ip: {};\t\terror: {}'.format(request.remote_addr, e))
+        return Response.error()
 
 
 @app.route('/netease/song/<keyword>/search', methods=['GET'])
@@ -62,10 +76,14 @@ def song_search(keyword):
         /netease/song/keyword/search
     :return:
     """
-    if keyword is None or keyword is '' or len(keyword) is 0:
-        return Response.error(keyword, message='keyword can not be null.')
+    try:
+        if keyword is None or keyword is '' or len(keyword) is 0:
+            return Response.error(keyword, message='keyword can not be null.')
 
-    return Response.success(MusicooService.song_search(keyword).to_json())
+        return Response.success(MusicooService.song_search(keyword).to_json())
+    except Exception as e:
+        log.error('[Musicoo] ip: {};\t\terror: {}'.format(request.remote_addr, e))
+        return Response.error()
 
 
 @app.route('/netease/song/<song_id>/detail')
@@ -76,12 +94,16 @@ def song_detail(song_id=''):
     :param song_id: eg 1379444316
     :return:
     """
-    if song_id is None or song_id is '' or len(song_id) is 0:
-        return Response.error(song_id, message='song_id can not be null.')
-    if song_id.isdigit() is False:
-        return Response.error(song_id, message='song_id must be digit.')
+    try:
+        if song_id is None or song_id is '' or len(song_id) is 0:
+            return Response.error(song_id, message='song_id can not be null.')
+        if song_id.isdigit() is False:
+            return Response.error(song_id, message='song_id must be digit.')
 
-    return Response.success(MusicooService.song_detail(song_id).to_json())
+        return Response.success(MusicooService.song_detail(song_id).to_json())
+    except Exception as e:
+        log.error('[Musicoo] ip: {};\t\terror: {}'.format(request.remote_addr, e))
+        return Response.error()
 
 
 @app.route('/netease/song/<keyword>', methods=['GET'])
@@ -93,10 +115,14 @@ def song(keyword):
     :param keyword:
     :return:
     """
-    if keyword is None or keyword is '' or len(keyword) is 0:
-        return Response.error(keyword, message='keyword can not be null.')
+    try:
+        if keyword is None or keyword is '' or len(keyword) is 0:
+            return Response.error(keyword, message='keyword can not be null.')
 
-    return Response.success(MusicooService.song(keyword).to_json())
+        return Response.success(MusicooService.song(keyword).to_json())
+    except Exception as e:
+        log.error('[Musicoo] ip: {};\t\terror: {}'.format(request.remote_addr, e))
+        return Response.error()
 
 
 """
@@ -145,8 +171,6 @@ def run_():
 
 if __name__ == '__main__':
     if platform.system() == "Windows":
-        print("Windows")
         run()
     else:
-        print("Not Windows")
         run_()

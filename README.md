@@ -1,6 +1,6 @@
 # Musicoo
 
-[![license](https://img.shields.io/badge/license-GNU-blue?style=flat-square)](https://github.com/hanhuoer/Musicoo)
+[![license](https://img.shields.io/github/license/hanhuoer/Musicoo?style=flat-square)](https://github.com/hanhuoer/Musicoo)
 [![python](https://img.shields.io/badge/python-3.6-green?style=flat-square&logo=appveyor)](https://github.com/hanhuoer/Musicoo)
 [![stars](https://img.shields.io/github/stars/hanhuoer/Musicoo?style=flat-square)](https://github.com/hanhuoer/Musicoo)
 [![issues](https://img.shields.io/github/issues/hanhuoer/Musicoo?style=flat-square)](https://github.com/hanhuoer/Musicoo)
@@ -71,4 +71,4 @@ WEB_SERVER = {
 
 ## 开源协议
 
-[GNU](https://github.com/hanhuoer/Musicoo/blob/master/LICENSE) © hanhuoer
+[GPL](https://github.com/hanhuoer/Musicoo/blob/master/LICENSE) © hanhuoer

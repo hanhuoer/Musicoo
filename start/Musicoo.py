@@ -23,7 +23,6 @@ def cli():
 @click.option('--port', default=None, help='Number of greetings.')
 def server(host, port):
     """start the web server"""
-    print(host, port)
     click.echo(BANNER)
     if platform.system() == "Windows":
         run(host, port)

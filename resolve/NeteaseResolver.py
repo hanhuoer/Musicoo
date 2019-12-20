@@ -52,8 +52,11 @@ class NeteaseResolver(object):
         :return: Song
         """
         try:
-            json = json.get('lrc')
-            song.set_lyric(json.get('lyric'))
+            lrc_json = json.get('lrc')
+            if json is None or json.get('nolyric') is True:
+                song.set_lyric(None)
+            else:
+                song.set_lyric(lrc_json.get('lyric'))
         except Exception as e:
             raise NeteaseResolverException('resolver exception; song: {}, json: {}'.format(song, json))
         finally:

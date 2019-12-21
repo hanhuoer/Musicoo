@@ -84,6 +84,55 @@ class NeteaseResolver(object):
             return song
 
     @staticmethod
+    def songs_search_resolver(json={}):
+        """
+        解析音乐的搜索结果
+            重点拿到 id 就好了，其余的交给 detail 去解析
+        :param song:
+        :param json:
+        :return:
+        """
+        result = {
+            'data': [],
+            'count': 0
+        }
+
+        try:
+            if json.get('code') is 200:
+                songs = json.get('result').get('songs')
+                count = json.get('result').get('songCount')
+                result['count'] = count
+
+                for item in songs:
+                    song = Song()
+                    song.set_id(item.get('id'))
+                    song.set_name(item.get('name'))
+                    song.set_picture_url(item.get('al').get('picUrl'))
+                    song.set_duration(item.get('dt'))
+                    name = ''
+                    ars = item.get('ar')
+                    for ar in ars:
+                        if len(ars)-1 is ars.index(ar):
+                            name += ar.get('name')
+                        else:
+                            name += ar.get('name') + '/'
+                    song.set_artist(name)
+
+                    album = Album()
+                    album.set_id(item.get('al').get('id'))
+                    album.set_name(item.get('al').get('name'))
+                    album.set_picture_url(item.get('al').get('picUrl'))
+
+                    song.set_album(album)
+
+                    result.get('data').append(song.to_json())
+
+        except Exception as e:
+            raise NeteaseResolverException('resolver exception; json: {}'.format(json))
+        finally:
+            return result
+
+    @staticmethod
     def song_detail_resolver(song=Song(), json={}):
         """
         解析歌曲详情

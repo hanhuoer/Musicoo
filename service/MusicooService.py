@@ -75,7 +75,7 @@ class MusicooService(object):
 
         netease = NetEase()
         result = netease.songs_search(keyword, offset=offset, limit=limit)
-        return result
+        return NeteaseResolver.songs_search_resolver(result)
 
     @staticmethod
     def song_detail(song_id, song=Song()):

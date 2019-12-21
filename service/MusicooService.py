@@ -61,6 +61,23 @@ class MusicooService(object):
         return song
 
     @staticmethod
+    def songs_search(keyword, offset=0, limit=30):
+        """
+        songs search service
+            搜索音乐
+            https://github.com/hanhuoer/Musicoo/wiki/web-api#3-%E9%9F%B3%E4%B9%90%E8%AF%A6%E6%83%85
+        :param limit:
+        :param offset:
+        :param keyword:
+        :param song:
+        :return:
+        """
+
+        netease = NetEase()
+        result = netease.songs_search(keyword, offset=offset, limit=limit)
+        return result
+
+    @staticmethod
     def song_detail(song_id, song=Song()):
         """
         song detail service

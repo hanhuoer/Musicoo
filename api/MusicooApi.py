@@ -86,6 +86,26 @@ def song_search(keyword):
         return Response.error()
 
 
+@app.route('/netease/songs/<keyword>/search/<offset>/<limit>', methods=['GET'])
+def songs_search(keyword, offset, limit):
+    """
+    搜索音乐们
+        /netease/songs/keyword/search
+    :param keyword 关键字
+    :param offset 页数
+    :param limit 数量
+    :return:
+    """
+    try:
+        if keyword is None or keyword is '' or len(keyword) is 0:
+            return Response.error(keyword, message='keyword can not be null.')
+
+        return Response.success(MusicooService.songs_search(keyword, offset=offset, limit=limit))
+    except Exception as e:
+        log.error('[Musicoo] ip: {};\t\terror: {}'.format(request.remote_addr, e))
+        return Response.error()
+
+
 @app.route('/netease/song/<song_id>/detail')
 def song_detail(song_id=''):
     """

@@ -129,7 +129,7 @@ class NetEase(object):
         }
         return self.request(POST, path, params)
 
-    def songs_search(self, keyword):
+    def songs_search(self, keyword, offset=0, limit=30):
         """
         搜索音乐
             按照关键字搜索一般就用这个
@@ -141,8 +141,8 @@ class NetEase(object):
             'csrf_token': '',
             'hlposttag': '</span>',
             'hlpretag': '<span class="s-fc7">',
-            'limit': '30',
-            'offset': '0',
+            'limit': str(limit),
+            'offset': str(offset),
             's': str(keyword),
             'total': 'true',
             'type': '1'

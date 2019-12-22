@@ -102,8 +102,12 @@ class MusicooService(object):
         :param song: [optional]
         :return:
         """
-        song = MusicooService.song_search(keyword, song)
-        song = MusicooService.song_url(song.get_id(), song)
-        song = MusicooService.song_lyric(song.get_id(), song)
-        song = MusicooService.song_detail(song.get_id(), song)
+        search_results = MusicooService.songs_search(keyword, 0, 10)
+        if search_results.get('count') > 0:
+            song = Song.dict_to_object(search_results.get('data')[0], Song())
+            song = MusicooService.song_url(song.get_id(), song)
+            song = MusicooService.song_lyric(song.get_id(), song)
+            song = MusicooService.song_detail(song.get_id(), song)
+        else:
+            pass
         return song

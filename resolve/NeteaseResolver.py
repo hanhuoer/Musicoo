@@ -9,6 +9,7 @@
 from exception.NeteaseResolverException import NeteaseResolverException
 from model.Album import Album
 from model.Song import Song
+from model.Privilege import Privilege
 
 
 class NeteaseResolver(object):
@@ -124,6 +125,9 @@ class NeteaseResolver(object):
                     album.set_picture_url(item.get('al').get('picUrl'))
 
                     song.set_album(album)
+
+                    privilege = Privilege.dict_to_object(item.get('privilege'), Privilege())
+                    song.set_privilege(privilege)
 
                     result.get('data').append(song.to_json())
 

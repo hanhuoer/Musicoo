@@ -1,6 +1,7 @@
 import json
 
 from model.Album import Album
+from model.Privilege import Privilege
 
 
 class Song(object):
@@ -17,6 +18,7 @@ class Song(object):
         self.picture_url = None
         self.artist = None
         self.album = Album()
+        self.privilege = Privilege()
 
     def get_id(self):
         return self.id
@@ -42,6 +44,9 @@ class Song(object):
     def get_album(self):
         return self.album
 
+    def get_privilege(self):
+        return self.privilege
+
     def set_id(self, id):
         self.id = id
 
@@ -66,6 +71,9 @@ class Song(object):
     def set_album(self, album):
         self.album = album
 
+    def set_privilege(self, privilege):
+        self.privilege = privilege
+
     def to_string(self):
         return json.dumps({
             'id': self.get_id(),
@@ -75,7 +83,8 @@ class Song(object):
             'duration': self.get_duration(),
             'lyric': self.get_lyric(),
             'picture_url': self.get_picture_url(),
-            'album': self.get_album().to_string()
+            'album': self.get_album().to_string(),
+            'privilege': self.get_privilege().to_string()
         }, ensure_ascii=False)
 
     def to_json(self):
@@ -87,5 +96,16 @@ class Song(object):
             'duration': self.get_duration(),
             'lyric': self.get_lyric(),
             'picture_url': self.get_picture_url(),
-            'album': self.get_album().to_json()
+            'album': self.get_album().to_json(),
+            'privilege': self.get_privilege().to_json()
         }
+
+    def dict_to_object(dictObject: dict, object):
+        for k, v in dictObject.items():
+            if k is 'album':
+                object.__dict__[k] = Album.dict_to_object(v, Album())
+            elif k is 'privilege':
+                object.__dict__[k] = Privilege.dict_to_object(v, Privilege())
+            else:
+                object.__dict__[k] = v
+        return object

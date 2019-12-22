@@ -51,3 +51,8 @@ class Album(object):
             'artist': self.get_artist(),
             'picture_url': self.get_picture_url()
         }
+
+    def dict_to_object(dictObject: dict, object):
+        for k, v in dictObject.items():
+            object.__dict__[k] = v
+        return object

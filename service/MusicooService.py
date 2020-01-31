@@ -118,7 +118,7 @@ class MusicooService(object):
         playlist songs
             获取歌单音乐列表
         :param playlist_id: 歌单 id
-        :return:
+        :return: See: Playlist.py
         """
 
         netease = NetEase()

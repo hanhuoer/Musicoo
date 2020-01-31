@@ -145,6 +145,26 @@ def song(keyword):
         return Response.error()
 
 
+@app.route('/netease/playlist/<playlist_id>/songs')
+def playlist_songs(playlist_id=''):
+    """
+    获取歌单列表，音乐 id、音乐名等等
+        /netease/playlist/3778678/songs
+    :param playlist_id: eg 3778678
+    :return:
+    """
+    try:
+        if playlist_id is None or playlist_id is '' or len(playlist_id) is 0:
+            return Response.error(playlist_id, message='playlist_id can not be null.')
+        if playlist_id.isdigit() is False:
+            return Response.error(playlist_id, message='song_id must be digit.')
+
+        return Response.success(MusicooService.playlist_songs(playlist_id).to_json())
+    except Exception as e:
+        log.error('[Musicoo] ip: {};\t\terror: {}'.format(request.remote_addr, e))
+        return Response.error()
+
+
 """
 ------------------------------------------------------------------------------------------------------------------------
 >                                                                                                                      <

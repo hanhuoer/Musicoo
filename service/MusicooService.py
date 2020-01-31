@@ -111,3 +111,16 @@ class MusicooService(object):
         else:
             pass
         return song
+
+    @staticmethod
+    def playlist_songs(playlist_id):
+        """
+        playlist songs
+            获取歌单音乐列表
+        :param playlist_id: 歌单 id
+        :return:
+        """
+
+        netease = NetEase()
+        result = netease.playlist_detail(playlist_id)
+        return NeteaseResolver.playlist_songs_resolver(result)

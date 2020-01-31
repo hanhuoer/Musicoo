@@ -179,6 +179,17 @@ class NetEase(object):
         }
         return self.request(POST, path, params)
 
+    def playlist_detail(self, playlist_id):
+        path = "/weapi/playlist/detail"
+        params = {
+            'id': str(playlist_id),
+            'ids': "[" + str(playlist_id) + "]",
+            'limit': 10000,
+            'offset': 0,
+            'csrf_token': ''
+        }
+        return self.request(POST, path, params)
+
 
 """
 ------------------------------------------------------------------------------------------------------------------------

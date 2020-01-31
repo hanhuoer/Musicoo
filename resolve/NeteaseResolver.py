@@ -10,6 +10,7 @@ from exception.NeteaseResolverException import NeteaseResolverException
 from model.Album import Album
 from model.Song import Song
 from model.Privilege import Privilege
+from model.Playlist import Playlist
 
 
 class NeteaseResolver(object):
@@ -113,7 +114,7 @@ class NeteaseResolver(object):
                     name = ''
                     ars = item.get('ar')
                     for ar in ars:
-                        if len(ars)-1 is ars.index(ar):
+                        if len(ars) - 1 is ars.index(ar):
                             name += ar.get('name')
                         else:
                             name += ar.get('name') + '/'
@@ -173,3 +174,20 @@ class NeteaseResolver(object):
             raise NeteaseResolverException('resolver exception; song: {}, json: {}'.format(song, json))
         finally:
             return song
+
+    @staticmethod
+    def playlist_songs_resolver(json={}):
+        """
+        解析歌单音乐列表
+        :param json:
+        :return:
+        """
+        playlist = Playlist()
+        print(json)
+
+        if json.get('code') is 200:
+            playlist.set_id(json.get('result').get('id'))
+            playlist.set_name(json.get('result').get('name'))
+            playlist.set_tracks(json.get('result').get('tracks'))
+
+        return playlist

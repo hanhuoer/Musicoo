@@ -182,8 +182,8 @@ class NetEase(object):
     def playlist_detail(self, playlist_id):
         """
         获取歌单详情
-        :param playlist_id:
-        :return:
+        :param playlist_id: 歌单 id
+        :return: json
         """
         path = "/weapi/playlist/detail"
         params = {

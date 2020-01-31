@@ -73,16 +73,17 @@ def generate_to_json():
     print(result)
 
 
-def test_dict_to_object():
-    playlist_dict = {'id': 514235010, 'fee': 4, 'payed': 5, 'st': 0, 'pl': 999000, 'dl': 999000, 'sp': 7, 'cp': 1,
-                     'subp': 1, 'cs': False, 'maxbr': 999000, 'fl': 0, 'toast': False, 'flag': 0}
-    playlist = Playlist.dict_to_object(playlist_dict, Playlist())
-    print(playlist.to_json())
-    print(playlist.to_string())
+# def test_dict_to_object():
+    # playlist_dict = {'id': 514235010, 'fee': 4, 'payed': 5, 'st': 0, 'pl': 999000, 'dl': 999000, 'sp': 7, 'cp': 1,
+    #                  'subp': 1, 'cs': False, 'maxbr': 999000, 'fl': 0, 'toast': False, 'flag': 0}
+    # playlist = Playlist.dict_to_object(playlist_dict, Playlist())
+    # print(playlist.to_json())
+    # print(playlist.to_string())
 
 
 if __name__ == '__main__':
-    generate_setter_getter()
-    generate_to_string()
-    generate_to_json()
+    # generate_setter_getter()
+    # generate_to_string()
+    # generate_to_json()
     # test_dict_to_object()
+    pass

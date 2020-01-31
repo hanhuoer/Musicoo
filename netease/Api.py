@@ -180,6 +180,11 @@ class NetEase(object):
         return self.request(POST, path, params)
 
     def playlist_detail(self, playlist_id):
+        """
+        获取歌单详情
+        :param playlist_id:
+        :return:
+        """
         path = "/weapi/playlist/detail"
         params = {
             'id': str(playlist_id),
